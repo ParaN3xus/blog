@@ -202,7 +202,7 @@
     // set basic document metadata
     set document(
       author: ("Myriad-Dreamin",),
-      title: title,
+      ..if not is-web-target { (title: title) },
     )
 
     // markup setting
