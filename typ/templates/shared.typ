@@ -82,10 +82,10 @@
   show math.equation: set text(weight: 400)
   show math.equation.where(block: true): it => context if shiroa-sys-target() == "html" {
     theme-frame(
-      tag: "p",
+      tag: "div",
       theme => {
         set text(fill: theme.main-color)
-        p-frame(attrs: ("class": "block-equation"), it)
+        div-frame(attrs: ("class": "block-equation"), it)
       },
     )
   } else {
