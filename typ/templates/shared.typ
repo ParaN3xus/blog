@@ -85,7 +85,7 @@
       tag: "div",
       theme => {
         set text(fill: theme.main-color)
-        div-frame(attrs: ("class": "block-equation"), it)
+        p-frame(attrs: ("class": "block-equation", "role": "math"), it)
       },
     )
   } else {
