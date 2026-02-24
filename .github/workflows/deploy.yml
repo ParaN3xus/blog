@@ -28,27 +28,23 @@ jobs:
         with:
           submodules: recursive
 
-      - name: list reversing file
-        run: |
-          ls -la content/article
-
       - name: Set up Node.js
         uses: actions/setup-node@v6
         with:
           node-version: "24"
 
-      - name: Cache Node Dependencies
+      - name: Cache Yarn
         uses: actions/cache@v4
         with:
-          path: |
-            ~/.cache/yarn/v6
-            node_modules
-          key: ${{ runner.os }}-yarn-${{ hashFiles('yarn.lock') }}
+          path: ~/.cache/yarn/v6
+          key: ${{ runner.os }}-yarn-cache-${{ hashFiles('yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-cache-
 
       - name: Install dependencies with Yarn
         uses: borales/actions-yarn@v4
         with:
-          cmd: install
+          cmd: install --frozen-lockfile
 
       - name: Sync Environment Variables
         run: cp content/.env.blog .env
