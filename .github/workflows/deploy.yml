@@ -28,6 +28,10 @@ jobs:
         with:
           submodules: recursive
 
+      - name: list reversing file
+        run: |
+          ls -la content/article
+
       - name: Set up Node.js
         uses: actions/setup-node@v6
         with:
