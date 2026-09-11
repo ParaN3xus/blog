@@ -4,7 +4,7 @@ import daisyui from "daisyui"
 import typography from "@tailwindcss/typography"
 
 export default {
-  content: ["./src/**/*.{html,astro,vue,js,ts}"],
+  content: ["./src/**/*.{html,astro,vue,js,ts}", "./content/**/*.typ"],
   theme: {
     extend: {
     },
