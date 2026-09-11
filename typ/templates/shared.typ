@@ -1,6 +1,6 @@
 #import "@preview/cetz:0.3.4"
 #import "@preview/lovelace:0.3.0": line-label, pseudocode-list
-#import "@preview/zebraw:0.6.3": zebraw, zebraw-init
+#import "@preview/hypraw:0.1.0": *
 #import "@preview/numbly:0.1.0": numbly
 #import "@preview/shiroa:0.4.0": is-html-target, is-pdf-target, is-web-target, plain-text, templates
 #import templates: *
@@ -176,55 +176,32 @@
 }
 
 #let code-block-rules(body) = {
-  let init-with-theme((code-extra-colors, is-dark)) = if is-dark {
-    zebraw-init.with(
-      // should vary by theme
-      background-color: if code-extra-colors.bg != none {
-        (code-extra-colors.bg, code-extra-colors.bg)
-      },
-      highlight-color: rgb("#3d59a1"),
-      comment-color: rgb("#394b70"),
-      lang-color: rgb("#3d59a1"),
-      lang: false,
-      numbering: false,
-    )
-  } else {
-    zebraw-init.with(
-      // should vary by theme
-      background-color: if code-extra-colors.bg != none {
-        (code-extra-colors.bg, code-extra-colors.bg)
-      },
-      lang: false,
-      numbering: false,
-    )
-  }
-
   /// HTML code block supported by zebraw.
-  show: init-with-theme(default-theme)
 
   show raw: set text(font: code-font)
   show raw.where(block: true): it => context if shiroa-sys-target() == "paged" {
-    set raw(theme: theme-style.code-theme) if theme-style.code-theme.len() > 0
+    // No `themed-raw` here: rebuilding the block inside this rule makes the rule
+    // match its own output. Only the HTML target gets a themed code block for now
+    // (the site builds with `target: () => "html"`).
     block(width: 100%, inset: (x: 4pt, y: 5pt), radius: 4pt, fill: code-extra-colors.bg, [
       #set text(fill: code-extra-colors.fg) if code-extra-colors.fg != none
+      #set text(0.875em)
       #set par(justify: false)
       // #place(right, text(luma(110), it.lang))
       #it
     ])
   } else {
     theme-frame(theme => {
-      show: init-with-theme(theme)
       let code-extra-colors = theme.code-extra-colors
       set text(fill: code-extra-colors.fg) if code-extra-colors.fg != none
       set text(fill: if theme.is-dark { rgb("dfdfd6") } else { black }) if code-extra-colors.fg == none
-      set raw(theme: theme-style.code-theme) if theme.style.code-theme.len() > 0
       set par(justify: false)
-      zebraw(
-        block-width: 100%,
-        // line-width: 100%,
-        wrap: false,
-        it,
-      )
+      show: hypraw.with(attach-styles: false, line-numbers: true)
+
+      themed-raw(it, theme.style.code-theme)
+
+      // The block layout, font size included, lives in `src/styles/global.css`:
+      html-style(code-block-vars(theme))
     })
   }
   body

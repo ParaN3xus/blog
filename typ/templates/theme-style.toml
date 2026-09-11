@@ -3,28 +3,28 @@
 color-scheme = "light"
 main-color = "#000"
 dash-color = "#20609f"
-code-theme = ""
+code-theme = "catppuccin-latte.tmTheme"
 
 [rust]
 color-scheme = "light"
 main-color = "#262625"
 dash-color = "#2b79a2"
-code-theme = ""
+code-theme = "catppuccin-latte.tmTheme"
 
 [coal]
 color-scheme = "dark"
 main-color = "#98a3ad"
 dash-color = "#2b79a2"
-code-theme = "tokyo-night.tmTheme"
+code-theme = "catppuccin-mocha.tmTheme"
 
 [navy]
 color-scheme = "dark"
 main-color = "#bcbdd0"
 dash-color = "#2b79a2"
-code-theme = "tokyo-night.tmTheme"
+code-theme = "catppuccin-mocha.tmTheme"
 
 [ayu]
 color-scheme = "dark"
 main-color = "#dfdfd6"
 dash-color = "#0096cf"
-code-theme = "tokyo-night.tmTheme"
+code-theme = "catppuccin-mocha.tmTheme"

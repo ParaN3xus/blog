@@ -46,6 +46,78 @@ figcaption {
   max-width: 100%;
   height: fit-content;
 }
+
+/* Code blocks with line numbers (hypraw, expressive-code inspired).
+   The layout lives here; the block colors come from the theme box that the
+   Typst templates emit around every code block (see `code-block-vars`). */
+:root {
+  --hypraw-padding: 0.7em;
+  --hypraw-font-size: 0.875em;
+  --hypraw-border-radius: 0.5em;
+  --hypraw-gutter-border-width: 1.5px;
+}
+
+/* Block container: themed background, and long lines scroll instead of
+   pushing the article column wider. The font size has to be set here — Typst's
+   `text` size does not survive the HTML export of a raw block. */
+.hypraw pre > code {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+  padding: var(--hypraw-padding);
+  font-size: var(--hypraw-font-size);
+  border-radius: var(--hypraw-border-radius);
+  background: var(--hypraw-bg-color);
+}
+
+.hypraw.has-line-numbers pre > code {
+  padding: var(--hypraw-padding) 0;
+}
+
+/* Individual code line - Grid layout for gutter + code */
+.hypraw.has-line-numbers .ec-line {
+  /* RTL support: Code is always LTR */
+  direction: ltr;
+  unicode-bidi: isolate;
+
+  /* Grid layout for gutter and code */
+  display: grid;
+  grid-template-areas: "gutter code";
+  grid-template-columns: auto 1fr;
+  position: relative;
+}
+
+/* Gutter container */
+.hypraw .gutter {
+  grid-area: gutter;
+  color: var(--hypraw-gutter-fg);
+  /* Make gutter elements non-interactive by default */
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Line number element */
+.hypraw .gutter .ln {
+  display: inline-flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+  box-sizing: content-box;
+  min-width: var(--ln-width, 2ch);
+  padding-inline: 2ch;
+}
+
+/* Code content container */
+.hypraw.has-line-numbers .ec-line .code {
+  grid-area: code;
+  position: relative;
+  box-sizing: content-box;
+  padding-inline-start: var(--hypraw-padding);
+  padding-inline-end: var(--hypraw-padding);
+  /* Border between gutter and code */
+  border-inline-start: var(--hypraw-gutter-border-width) solid
+    var(--hypraw-gutter-border-color);
+}
+
 .inline-equation {
   display: inline-block;
   width: fit-content;
