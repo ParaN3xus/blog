@@ -11,7 +11,7 @@
 #let is-html-target = is-html-target()
 #let is-pdf-target = is-pdf-target()
 #let is-md-target = target == "md"
-#let sys-is-html-target = ("target" in dictionary(std))
+#let sys-is-html-target = ("html" in dictionary(std))
 #let is-web-target = is-web-target() or sys-is-html-target
 
 
