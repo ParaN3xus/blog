@@ -2,10 +2,10 @@
 #import "@preview/lovelace:0.3.0": line-label, pseudocode-list
 #import "@preview/zebraw:0.6.3": zebraw, zebraw-init
 #import "@preview/numbly:0.1.0": numbly
-#import "@preview/shiroa:0.2.3": is-html-target, is-pdf-target, is-web-target, plain-text, templates
+#import "@preview/shiroa:0.4.0": is-html-target, is-pdf-target, is-web-target, plain-text, templates
 #import templates: *
-#import "mod.typ": *
 #import "theme.typ": *
+#import "mod.typ": *
 
 // Metadata
 #let is-html-target = is-html-target()
@@ -235,6 +235,19 @@
 }
 
 #let my-rules(body) = {
+  // footnote
+  show: it => if sys-is-html-target {
+    show footnote.entry: x => {
+      let loc = x.note.location()
+      link(loc, counter(footnote).display(at: loc, "1"))
+      [ ]
+      x.note.body
+    }
+    it
+  } else {
+    it
+  }
+
   show quote: it => {
     if is-web-target {
       html.elem(
@@ -313,16 +326,6 @@
     show: code-block-rules
     // my
     show: my-rules
-
-    show: it => if sys-is-html-target {
-      show footnote: it => context {
-        let num = counter(footnote).get().at(0)
-        link(label("footnote-" + str(num)), super(str(num)))
-      }
-      it
-    } else {
-      it
-    }
 
     // Main body.
     set par(justify: true)
@@ -441,21 +444,6 @@
     archive-creator(archive-indices, body)
   } else {
     body
-  }
-
-  context if is-same-kind and sys-is-html-target {
-    query(footnote)
-      .enumerate()
-      .map(((idx, it)) => {
-        enum.item[
-          #html.elem(
-            "div",
-            attrs: ("data-typst-label": "footnote-" + str(idx + 1)),
-            it.body,
-          )
-        ]
-      })
-      .join()
   }
 }
 

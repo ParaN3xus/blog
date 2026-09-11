@@ -2,8 +2,8 @@
 #import "@preview/fletcher:0.5.7"
 #import "target.typ": sys-is-html-target
 #import "theme.typ": theme-frame
-#import "@preview/shiroa:0.2.3": plain-text, templates
-#import templates: get-label-disambiguator, label-disambiguator, make-unique-label
+#import "@preview/shiroa:0.4.0": plain-text, templates
+#import templates: get-label-disambiguator, label-disambiguator, make-unique-label, update-label-disambiguator
 
 #let code-image = if sys-is-html-target {
   it => {
@@ -21,7 +21,7 @@
 /// - `elem`(content): The heading element to resolve
 #let static-heading-link(elem, body: "#") = context {
   let id = {
-    let title = plain-text(elem).trim()
+    let title = "heading-" + plain-text(elem).trim()
     "label-"
     str(
       make-unique-label(
@@ -38,6 +38,50 @@
     ),
     body,
   )
+}
+
+
+#let heading-hash(it, hash-color: blue) = {
+  let title = plain-text(it.body)
+  if title != none {
+    let title = title.trim()
+    title = "heading-" + title
+    update-label-disambiguator(title)
+    context if not sys-is-html-target {
+      let loc = here()
+      let dest = get-label-disambiguator(loc, title)
+      let h = measure(it.body).height
+      place(
+        left,
+        dx: -20pt,
+        [
+          #set text(fill: hash-color)
+          #link(loc)[\#] #dest
+        ],
+      )
+    } else {
+      let loc = here()
+      let dest = get-label-disambiguator(loc, title)
+      html.elem(
+        "div",
+        attrs: (
+          role: "none",
+          style: "float: left; width: 0pt; position: relative; right: var(--heading-hash-offset-"
+            + str(it.level)
+            + ", 20px)",
+        ),
+      )[
+        #set text(fill: hash-color)
+        #html.elem(
+          "h" + str(it.level + 1),
+          attrs: (style: "display: inline;", class: "typst-content-link shiroa-heading-hash"),
+          [
+            #link(dest)[\#] #dest
+          ],
+        )
+      ]
+    }
+  }
 }
 
 #let blog-tags = (

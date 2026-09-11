@@ -1,4 +1,4 @@
-#import "@preview/shiroa:0.2.3": templates
+#import "@preview/shiroa:0.4.0": templates
 #import templates: *
 #import "target.typ": sys-is-html-target
 
