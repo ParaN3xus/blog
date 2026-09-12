@@ -172,13 +172,16 @@ figcaption {
 
 /* Outline */
 
-/* shiroa >= 0.4 renders the outline as `nav > ol > li` instead of plain divs.
-   The prose list rules would then space the entries out (li margins, list
+/* The table of contents wrapper is `class="article-outline"` (see
+   typ/templates/shared.typ) — deliberately not `outline`, which is a Tailwind
+   utility (.outline { outline-style: solid }) and would ring the box.
+   shiroa >= 0.4 renders the outline as `nav > ol > li` instead of plain divs:
+   the prose list rules would then space the entries out (li margins, list
    margins) and indent them twice (list padding), so the list boxes are reset
    here. Indentation stays with `.outline-item.x-heading-N` below. */
-.outline ol,
-.outline ul,
-.outline li {
+.article-outline ol,
+.article-outline ul,
+.article-outline li {
   margin: 0;
   padding: 0;
   list-style: none;

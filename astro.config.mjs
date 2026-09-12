@@ -5,6 +5,7 @@ import { typst } from "astro-typst";
 import { loadEnv } from "vite";
 import icon from "astro-icon";
 import copyAssetsIntegration from './integrations/copy-assets.js';
+import typstClassesIntegration from './integrations/typst-classes.js';
 import { resolve } from "path";
 
 // Please check `defineConfig/env` in astro.config.mjs for schema
@@ -50,7 +51,9 @@ export default defineConfig({
       target: () => "html",
       fontArgs: [{ fontPaths: [resolve(import.meta.dirname, "assets/fonts/")] }]
     }),
-    copyAssetsIntegration()
+    copyAssetsIntegration(),
+    // Renders the articles to HTML so Tailwind can see the classes Typst emits.
+    typstClassesIntegration(),
   ],
 
   vite: {

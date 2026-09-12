@@ -410,7 +410,7 @@
     html.elem(
       "div",
       attrs: (
-        class: "outline",
+        class: "article-outline",
       ),
       outline(title: none),
     )
