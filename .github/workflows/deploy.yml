@@ -28,23 +28,17 @@ jobs:
         with:
           submodules: recursive
 
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+
       - name: Set up Node.js
         uses: actions/setup-node@v6
         with:
           node-version: "24"
+          cache: "pnpm"
 
-      - name: Cache Yarn
-        uses: actions/cache@v4
-        with:
-          path: ~/.cache/yarn/v6
-          key: ${{ runner.os }}-yarn-cache-${{ hashFiles('yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-cache-
-
-      - name: Install dependencies with Yarn
-        uses: borales/actions-yarn@v4
-        with:
-          cmd: install --frozen-lockfile
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
 
       - name: Sync Environment Variables
         run: cp content/.env.blog .env
@@ -73,7 +67,7 @@ jobs:
           rm noto-sans-cjk.zip
 
       - name: Build Blog
-        run: yarn build
+        run: pnpm build
 
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/wrangler-action@v3
