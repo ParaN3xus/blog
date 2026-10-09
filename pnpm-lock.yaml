@@ -162,6 +162,9 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+overrides:
+  typstx: github:OverflowCat/hastx#5fa0bee9&path:packages/mdx
+
 importers:
 
   .:
@@ -2770,8 +2773,9 @@ packages:
     engines: {node: '>=14.17'}
     hasBin: true
 
-  typstx@0.0.1:
-    resolution: {integrity: sha512-vX4Jx+K11L4tLYcUkhbPIauyngrh8iBNSh/K4L/AgJzBgcNYe1EQIyV3jNBFNb6+bWoyVVcRIx/QGS7zUXXRtA==}
+  typstx@https://codeload.github.com/OverflowCat/hastx/tar.gz/5fa0bee9fcbffd63d410b72e0138dfa1e8b13f1b#path:packages/mdx:
+    resolution: {gitHosted: true, integrity: sha512-wc0mGr4mKwZsT/wEmVn5/EFVXlvksOXa4dZ4CPTvvZpBWGchndvfbNCYdqAndYairDHmuHtMUSL0FfiaSQHPdw==, path: packages/mdx, tarball: https://codeload.github.com/OverflowCat/hastx/tar.gz/5fa0bee9fcbffd63d410b72e0138dfa1e8b13f1b}
+    version: 0.0.1
 
   ufo@1.6.4:
     resolution: {integrity: sha512-JFNbkD1Svwe0KvGi8GOeLcP4kAWQ609twvCdcHxq1oSL8svv39ZuSvajcD8B+5D0eL4+s1Is2D/O6KN3qcTeRA==}
@@ -4072,7 +4076,7 @@ snapshots:
       astro-integration-kit: 0.19.1(astro@5.18.2(@types/node@22.20.5)(jiti@1.21.7)(lightningcss@1.33.0)(rollup@4.64.2)(typescript@5.9.3)(yaml@2.9.1))
       cheerio: 1.2.0
       rehype-stringify: 10.0.1
-      typstx: 0.0.1
+      typstx: https://codeload.github.com/OverflowCat/hastx/tar.gz/5fa0bee9fcbffd63d410b72e0138dfa1e8b13f1b#path:packages/mdx
       unified: 11.0.5
     transitivePeerDependencies:
       - rollup
@@ -6015,7 +6019,7 @@ snapshots:
 
   typescript@5.9.3: {}
 
-  typstx@0.0.1:
+  typstx@https://codeload.github.com/OverflowCat/hastx/tar.gz/5fa0bee9fcbffd63d410b72e0138dfa1e8b13f1b#path:packages/mdx:
     dependencies:
       '@types/estree': 1.0.9
       '@types/estree-jsx': 1.0.5

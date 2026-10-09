@@ -8,7 +8,6 @@
     "build": "astro build",
     "preview": "astro preview",
     "create:post": "node scripts/create-file.mjs blog-post",
-    "postinstall": "node scripts/patch-typstx.mjs",
     "astro": "astro"
   },
   "dependencies": {

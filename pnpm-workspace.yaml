@@ -1,7 +1,8 @@
-# pnpm configuration (settings moved here from package.json/.npmrc in pnpm 10+).
-# esbuild and sharp need their install scripts to fetch/link their platform
-# binaries; without allowlisting them, `pnpm install` fails with
-# ERR_PNPM_IGNORED_BUILDS.
 allowBuilds:
   esbuild: true
   sharp: true
+
+overrides:
+  typstx: "github:OverflowCat/hastx#5fa0bee9&path:packages/mdx"
+
+blockExoticSubdeps: false
