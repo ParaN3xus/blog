@@ -73,9 +73,8 @@ jobs:
         run: |
           # Cloudflare Pages rejects any file above 25 MiB, and the yearly archive
           # PDFs embed article images at full resolution (2025 was 31 MiB, mostly
-          # one post's photos). Re-encode only the oversized ones with
-          # pdf-compress, a Ghostscript CLI — it downsamples the images and keeps
-          # text and vectors as they are.
+          # one post's photos). Ghostscript's /ebook preset re-encodes those images
+          # at 150 dpi and leaves text and vectors as they are.
           files=$(find dist/archive -name '*.pdf' -size +26214400c)
           [ -z "$files" ] && { echo "no PDF over the 25 MiB limit"; exit 0; }
 
@@ -85,8 +84,9 @@ jobs:
           fi
 
           for f in $files; do
-            pnpm dlx pdf-compress@2.0.0 --q-medium "$f"
-            mv "${f%.pdf}-compressed.pdf" "$f"
+            gs -dQUIET -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -dPDFSETTINGS=/ebook \
+              -sOutputFile="$f.compressed" "$f"
+            mv "$f.compressed" "$f"
           done
 
       - name: Deploy to Cloudflare Pages
