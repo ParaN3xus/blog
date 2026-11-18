@@ -93,6 +93,9 @@
   body
 }
 
+/// Room an inline math frame needs beyond the size Typst lays it out with.
+#let inline-math-pad = (top: 5pt, bottom: 8pt)
+
 #let equation-rules(body) = {
   show math.equation: set text(weight: 400)
 
@@ -144,7 +147,7 @@
   show math.equation.where(block: false): it => context if shiroa-sys-target() == "html" {
     theme-frame(tag: "span", theme => {
       set text(fill: theme.main-color)
-      span-frame(attrs: (class: "inline-equation"), it)
+      span-frame(attrs: (class: "inline-equation"), pad(..inline-math-pad, it))
     })
   } else {
     it
