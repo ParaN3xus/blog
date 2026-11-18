@@ -85,8 +85,8 @@ jobs:
 
           for f in $files; do
             gs -dQUIET -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -dPDFSETTINGS=/ebook \
-              -sOutputFile="$f.compressed" "$f"
-            mv "$f.compressed" "$f"
+              -sOutputFile="$f.compressed.pdf" "$f"
+            mv "$f.compressed.pdf" "$f"
           done
 
       - name: Deploy to Cloudflare Pages
